@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { crmService } from '../../services/crmService';
 import { useAuth } from '../../context/AuthContext';
-import { 
-  Users, CheckSquare, Calendar, ChevronRight, DollarSign, 
-  TrendingUp, Plus, Trash2, Edit2, Search, CheckCircle2, 
+import {
+  Users, CheckSquare, Calendar, ChevronRight, DollarSign,
+  TrendingUp, Plus, Trash2, Edit2, Search, CheckCircle2,
   AlertTriangle, Filter, ArrowUpRight, ShieldAlert, Award,
   Clock, Phone, Play, Pause, Volume2, VolumeX, X, Briefcase, FileText,
   RotateCcw
@@ -23,7 +23,7 @@ export function ManagerDashboard() {
   // Drill-down Detail Modal State
   const [selectedExecutive, setSelectedExecutive] = useState(null);
   const [modalTab, setModalTab] = useState('tasks'); // 'tasks' | 'leads' | 'calls' | 'attendance'
-  
+
   // Call playback player state (inside modal/dashboard)
   const [activeCall, setActiveCall] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -42,10 +42,10 @@ export function ManagerDashboard() {
 
     const team = users.filter(u => u.managerId === currentUser.id);
     const teamIds = team.map(u => u.id);
-    
+
     // Combined leads: team leads + manager owned leads
     const combinedLeads = leads.filter(l => teamIds.includes(l.userId) || l.userId === currentUser.id);
-    
+
     // Pending leaves from team members
     const pendingLeaves = leaves.filter(l => teamIds.includes(l.requesterId) && l.status === 'Pending');
 
@@ -63,7 +63,7 @@ export function ManagerDashboard() {
       // 1. Task progress
       const execTasks = tasks.filter(t => t.assignedTo === exec.id);
       const completedTasks = execTasks.filter(t => t.status === 'Completed').length;
-      
+
       // 2. Sales Pipeline
       const execLeads = leads.filter(l => l.userId === exec.id);
       const activeLeads = execLeads.filter(l => l.status !== 'Closed Won' && l.status !== 'Closed Lost' && l.status !== 'Close');
@@ -76,7 +76,7 @@ export function ManagerDashboard() {
       let status = 'Offline';
       let checkInTime = null;
       let checkOutTime = null;
-      
+
       if (todayRecord) {
         checkInTime = todayRecord.checkIn;
         checkOutTime = todayRecord.checkOut;
@@ -300,8 +300,8 @@ export function ManagerDashboard() {
                       </td>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span 
-                            style={{ 
+                          <span
+                            style={{
                               backgroundColor: exec.status === 'Online' ? 'var(--success)' : exec.status === 'Checked Out' ? 'var(--warning)' : 'var(--text-muted)',
                               boxShadow: exec.status === 'Online' ? '0 0 8px var(--success)' : exec.status === 'Checked Out' ? '0 0 8px var(--warning)' : 'none',
                               width: '10px',
@@ -344,12 +344,12 @@ export function ManagerDashboard() {
                         </div>
                       </td>
                       <td style={{ textAlign: 'right' }}>
-                        <button 
+                        <button
                           onClick={() => {
                             setSelectedExecutive(exec);
                             setModalTab('tasks');
                           }}
-                          className="btn btn-secondary" 
+                          className="btn btn-secondary"
                           style={{ padding: '6px 12px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
                         >
                           Deep View <ChevronRight size={14} />
@@ -365,7 +365,7 @@ export function ManagerDashboard() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: '32px' }}>
-        
+
         {/* Recent Pipeline Activity */}
         <div className="glass-panel" style={{ padding: '24px' }}>
           <h3 style={{ marginBottom: '20px' }}>Recent Pipeline Activity</h3>
@@ -455,7 +455,7 @@ export function ManagerDashboard() {
             background: 'var(--card-bg)'
           }}>
             {/* Close Button */}
-            <button 
+            <button
               onClick={() => setSelectedExecutive(null)}
               style={{ position: 'absolute', top: '24px', right: '24px', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}
             >
@@ -496,8 +496,8 @@ export function ManagerDashboard() {
                 <div className="glass-panel" style={{ padding: '16px', textAlign: 'center', background: 'rgba(255,255,255,0.02)' }}>
                   <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block', fontWeight: 700 }}>TODAY'S STATUS</span>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '6px' }}>
-                    <span style={{ 
-                      width: '8px', height: '8px', borderRadius: '50%', 
+                    <span style={{
+                      width: '8px', height: '8px', borderRadius: '50%',
                       backgroundColor: selectedExecutive.status === 'Online' ? 'var(--success)' : selectedExecutive.status === 'Checked Out' ? 'var(--warning)' : 'var(--text-muted)',
                       boxShadow: selectedExecutive.status === 'Online' ? '0 0 8px var(--success)' : selectedExecutive.status === 'Checked Out' ? '0 0 8px var(--warning)' : 'none'
                     }} />
@@ -512,10 +512,10 @@ export function ManagerDashboard() {
 
             {/* Modal Navigation Tabs */}
             <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid var(--border)', marginBottom: '20px', overflowX: 'auto' }}>
-              <button 
+              <button
                 onClick={() => setModalTab('tasks')}
                 style={{
-                  padding: '10px 20px', background: 'none', border: 'none', 
+                  padding: '10px 20px', background: 'none', border: 'none',
                   borderBottom: modalTab === 'tasks' ? '3px solid var(--primary)' : '3px solid transparent',
                   color: modalTab === 'tasks' ? 'var(--text-primary)' : 'var(--text-secondary)',
                   fontWeight: 700, cursor: 'pointer', outline: 'none', transition: 'all 0.2s',
@@ -524,10 +524,10 @@ export function ManagerDashboard() {
               >
                 <CheckSquare size={16} /> Task Directives
               </button>
-              <button 
+              <button
                 onClick={() => setModalTab('leads')}
                 style={{
-                  padding: '10px 20px', background: 'none', border: 'none', 
+                  padding: '10px 20px', background: 'none', border: 'none',
                   borderBottom: modalTab === 'leads' ? '3px solid var(--primary)' : '3px solid transparent',
                   color: modalTab === 'leads' ? 'var(--text-primary)' : 'var(--text-secondary)',
                   fontWeight: 700, cursor: 'pointer', outline: 'none', transition: 'all 0.2s',
@@ -536,10 +536,10 @@ export function ManagerDashboard() {
               >
                 <TrendingUp size={16} /> Sales Pipeline
               </button>
-              <button 
+              <button
                 onClick={() => setModalTab('calls')}
                 style={{
-                  padding: '10px 20px', background: 'none', border: 'none', 
+                  padding: '10px 20px', background: 'none', border: 'none',
                   borderBottom: modalTab === 'calls' ? '3px solid var(--primary)' : '3px solid transparent',
                   color: modalTab === 'calls' ? 'var(--text-primary)' : 'var(--text-secondary)',
                   fontWeight: 700, cursor: 'pointer', outline: 'none', transition: 'all 0.2s',
@@ -548,10 +548,10 @@ export function ManagerDashboard() {
               >
                 <Phone size={16} /> IVR Call Logs
               </button>
-              <button 
+              <button
                 onClick={() => setModalTab('attendance')}
                 style={{
-                  padding: '10px 20px', background: 'none', border: 'none', 
+                  padding: '10px 20px', background: 'none', border: 'none',
                   borderBottom: modalTab === 'attendance' ? '3px solid var(--primary)' : '3px solid transparent',
                   color: modalTab === 'attendance' ? 'var(--text-primary)' : 'var(--text-secondary)',
                   fontWeight: 700, cursor: 'pointer', outline: 'none', transition: 'all 0.2s',
@@ -702,7 +702,7 @@ export function ManagerDashboard() {
                               <td style={{ textAlign: 'right' }}>
                                 <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end', alignItems: 'center' }}>
                                   {c.recordingUrl ? (
-                                    <button 
+                                    <button
                                       onClick={() => selectCallToPlay(c)}
                                       className="btn"
                                       style={{
@@ -773,7 +773,7 @@ export function ManagerDashboard() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '24px' }}>
-              <button 
+              <button
                 onClick={() => setSelectedExecutive(null)}
                 className="btn btn-secondary"
                 style={{ padding: '10px 24px', fontWeight: 700 }}
@@ -802,7 +802,7 @@ export function ManagerDashboard() {
           boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
           borderRadius: '16px'
         }}>
-          <audio 
+          <audio
             ref={audioRef}
             src={activeCall.recordingUrl}
             onTimeUpdate={handleTimeUpdate}
@@ -811,7 +811,7 @@ export function ManagerDashboard() {
           />
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <button 
+              <button
                 onClick={togglePlay}
                 style={{
                   width: '36px', height: '36px', borderRadius: '50%',
@@ -831,7 +831,7 @@ export function ManagerDashboard() {
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexGrow: 1, maxWidth: '400px' }}>
               <span style={{ fontSize: '0.7rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>{formatTime(currentTime)}</span>
-              <input 
+              <input
                 type="range"
                 min="0"
                 max={duration || 100}
@@ -846,13 +846,13 @@ export function ManagerDashboard() {
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <button 
+              <button
                 onClick={toggleMute}
                 style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer' }}
               >
                 {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
               </button>
-              <button 
+              <button
                 onClick={() => {
                   setActiveCall(null);
                   setIsPlaying(false);
@@ -1284,14 +1284,14 @@ export function ManagerPipeline() {
     const leads = crmService.getLeads();
     const team = users.filter(u => u.managerId === currentUser.id);
     const teamIds = team.map(u => u.id);
-    
+
     // Managers can see their team leads + their own leads
     const filtered = leads.filter(l => teamIds.includes(l.userId) || l.userId === currentUser.id);
     setPipelineLeads(filtered);
   }, [currentUser]);
 
   const stages = ['New', 'Contacted', 'Interested to Buy', 'Follow Up', 'Proposal Sent', 'Negotiation', 'Closed Won', 'Closed Lost'];
-  
+
   const getFilteredStageLeads = (stage) => {
     return pipelineLeads.filter(l => {
       // Normalize closed status names
@@ -1312,9 +1312,9 @@ export function ManagerPipeline() {
       <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
         <div style={{ position: 'relative', flex: 1 }}>
           <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-          <input 
-            type="text" 
-            placeholder="Search by client identity..." 
+          <input
+            type="text"
+            placeholder="Search by client identity..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             style={{ paddingLeft: '48px', boxSizing: 'border-box' }}
@@ -1390,13 +1390,13 @@ export function ManagerTeamLeads() {
     const allLeads = crmService.getLeads();
     const team = users.filter(u => u.managerId === currentUser.id);
     const teamIds = team.map(u => u.id);
-    
+
     // Team leads + manager leads
     const combined = allLeads.filter(l => teamIds.includes(l.userId) || l.userId === currentUser.id);
     setLeads(combined);
   }, [currentUser]);
 
-  const filteredLeads = leads.filter(l => 
+  const filteredLeads = leads.filter(l =>
     l.customerName.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -1409,9 +1409,9 @@ export function ManagerTeamLeads() {
 
       <div style={{ position: 'relative' }}>
         <Search size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-        <input 
-          type="text" 
-          placeholder="Filter team lead list by client identity..." 
+        <input
+          type="text"
+          placeholder="Filter team lead list by client identity..."
           value={search}
           onChange={e => setSearch(e.target.value)}
           style={{ paddingLeft: '48px', boxSizing: 'border-box' }}
@@ -1651,8 +1651,8 @@ export function ManagerTeamSales() {
     const team = users.filter(u => u.managerId === currentUser.id);
     const teamIds = team.map(u => u.id);
 
-    const closed = leads.filter(l => 
-      (teamIds.includes(l.userId) || l.userId === currentUser.id) && 
+    const closed = leads.filter(l =>
+      (teamIds.includes(l.userId) || l.userId === currentUser.id) &&
       (l.status === 'Closed Won' || l.status === 'Close')
     );
     setSales(closed);
@@ -1864,7 +1864,7 @@ export function ManagerTeamLeaves() {
   const fetchLeaves = () => {
     const users = crmService.getUsers();
     const teamIds = users.filter(u => u.managerId === currentUser.id).map(u => u.id);
-    
+
     const allLeaves = crmService.getLeaves();
     setLeaves(allLeaves.filter(l => teamIds.includes(l.requesterId)));
   };
@@ -1984,7 +1984,7 @@ export function ManagerApplyLeave() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '32px', alignItems: 'start' }}>
-        
+
         {/* Application Form */}
         <div className="glass-panel" style={{ padding: '28px' }}>
           <h3 style={{ marginBottom: '20px' }}>Absence Application</h3>
