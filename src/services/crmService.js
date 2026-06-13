@@ -1,6 +1,15 @@
 // CRM Service - Unified API and LocalStorage Mock database client
 const USE_API = true; // Toggle to true to connect to Spring Boot API endpoints
-const API_BASE_URL = '/api/crm';
+const API_BASE = import.meta.env.VITE_API_URL || '';
+const API_BASE_URL = `${API_BASE}/api/crm`;
+
+const originalFetch = window.fetch;
+const fetch = (url, options) => {
+  if (typeof url === 'string' && url.startsWith('/')) {
+    return originalFetch(`${API_BASE}${url}`, options);
+  }
+  return originalFetch(url, options);
+};
 
 // Mock Seed Data
 const MOCK_USERS = [

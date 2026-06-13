@@ -8,24 +8,5 @@ export default defineConfig({
     babel({
       presets: [reactCompilerPreset()]
     })
-  ],
-
-  // Base path for deployment
-  base: '/teamCore/',
-
-  // Development server proxy
-  server: {
-    proxy: {
-      '/login': {
-        target: 'https://teamcorebackend-production.up.railway.app',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/api': {
-        target: 'https://teamcorebackend-production.up.railway.app',
-        changeOrigin: true,
-        secure: false,
-      }
-    }
-  }
+  ]
 });
