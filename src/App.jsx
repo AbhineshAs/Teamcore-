@@ -47,7 +47,7 @@ function RootRedirect() {
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router basename="/teamCore">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<RootRedirect />} />

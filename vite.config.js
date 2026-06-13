@@ -17,12 +17,14 @@ export default defineConfig({
   server: {
     proxy: {
       '/login': {
-        target: 'http://localhost:8080',
+        target: 'https://teamcorebackend-production.up.railway.app',
         changeOrigin: true,
+        secure: false,
       },
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'https://teamcorebackend-production.up.railway.app',
         changeOrigin: true,
+        secure: false,
       }
     }
   }
